@@ -49,15 +49,15 @@ const ScenarioManager: React.FC<ScenarioManagerProps> = ({
 
       if (scenariosError) throw scenariosError;
 
-      // Load user profile
+      // Load user profile - use maybeSingle to avoid errors if no profile exists
       const { data: profileData, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (profileError && profileError.code !== 'PGRST116') {
-        throw profileError;
+      if (profileError) {
+        console.warn('No profile found for user:', userId, profileError);
       }
 
       // Load properties
@@ -138,7 +138,19 @@ const ScenarioManager: React.FC<ScenarioManagerProps> = ({
         notes: s.notes,
         startDate: new Date(s.start_date),
         horizonYears: s.horizon_years,
-        profile: profile!,
+        profile: profile || {
+          id: 'default-profile',
+          name: 'Demo User',
+          dateOfBirth: new Date('1985-06-15'),
+          retirementAge: 65,
+          inflationCpiPa: 0.025,
+          wageGrowthPa: 0.03,
+          returnSuperPa: 0.07,
+          returnPortfolioPa: 0.08,
+          taxMarginalRate: 0.37,
+          medicareLevy: 0.02,
+          stateCode: 'NSW',
+        },
         properties,
         loans,
         stressRateBumpPct: s.stress_rate_bump_pct,
@@ -153,6 +165,9 @@ const ScenarioManager: React.FC<ScenarioManagerProps> = ({
       if (!currentScenario && transformedScenarios.length > 0) {
         onScenarioChange(transformedScenarios[0]);
       }
+      
+      // Always call this to let parent know loading is done
+      setLoading(false);
     } catch (error) {
       console.error('Error loading scenarios:', error);
       toast({

@@ -32,7 +32,7 @@ const EditableDashboard: React.FC = () => {
   const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
   const [forecast, setForecast] = useState<ForecastMonth[]>([]);
   const [summary, setSummary] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [stressMode, setStressMode] = useState(false);
   
   // Edit modes
