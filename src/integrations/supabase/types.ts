@@ -14,7 +14,271 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      loans: {
+        Row: {
+          allow_redraw: boolean | null
+          created_at: string
+          id: string
+          io_years: number | null
+          offset_contrib_monthly_cents: number | null
+          offset_start_cents: number | null
+          property_id: string
+          rate_pa: number
+          start_balance_cents: number
+          start_date: string
+          term_years: number | null
+          updated_at: string
+        }
+        Insert: {
+          allow_redraw?: boolean | null
+          created_at?: string
+          id?: string
+          io_years?: number | null
+          offset_contrib_monthly_cents?: number | null
+          offset_start_cents?: number | null
+          property_id: string
+          rate_pa: number
+          start_balance_cents: number
+          start_date: string
+          term_years?: number | null
+          updated_at?: string
+        }
+        Update: {
+          allow_redraw?: boolean | null
+          created_at?: string
+          id?: string
+          io_years?: number | null
+          offset_contrib_monthly_cents?: number | null
+          offset_start_cents?: number | null
+          property_id?: string
+          rate_pa?: number
+          start_balance_cents?: number
+          start_date?: string
+          term_years?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loans_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      plan_events: {
+        Row: {
+          amount_cents: number | null
+          created_at: string
+          event_date: string
+          id: string
+          kind: string
+          meta_json: Json | null
+          scenario_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          created_at?: string
+          event_date: string
+          id?: string
+          kind: string
+          meta_json?: Json | null
+          scenario_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number | null
+          created_at?: string
+          event_date?: string
+          id?: string
+          kind?: string
+          meta_json?: Json | null
+          scenario_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plan_events_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      properties: {
+        Row: {
+          becomes_ip_on: string | null
+          becomes_ppor_on: string | null
+          costs_fixed_pa_cents: number | null
+          created_at: string
+          depreciation_capital_pa_cents: number | null
+          depreciation_plant_pa_cents: number | null
+          id: string
+          insurance_pa_cents: number | null
+          land_tax_pa_cents: number | null
+          maintenance_pct_of_value: number | null
+          name: string
+          purchase_date: string
+          purchase_price_cents: number
+          rates_pa_cents: number | null
+          rent_pw_cents: number | null
+          sold_on: string | null
+          strata_pa_cents: number | null
+          updated_at: string
+          user_id: string
+          vacancy_weeks_pa: number | null
+          value_growth_pa: number | null
+          value_now_cents: number
+        }
+        Insert: {
+          becomes_ip_on?: string | null
+          becomes_ppor_on?: string | null
+          costs_fixed_pa_cents?: number | null
+          created_at?: string
+          depreciation_capital_pa_cents?: number | null
+          depreciation_plant_pa_cents?: number | null
+          id?: string
+          insurance_pa_cents?: number | null
+          land_tax_pa_cents?: number | null
+          maintenance_pct_of_value?: number | null
+          name: string
+          purchase_date: string
+          purchase_price_cents: number
+          rates_pa_cents?: number | null
+          rent_pw_cents?: number | null
+          sold_on?: string | null
+          strata_pa_cents?: number | null
+          updated_at?: string
+          user_id: string
+          vacancy_weeks_pa?: number | null
+          value_growth_pa?: number | null
+          value_now_cents: number
+        }
+        Update: {
+          becomes_ip_on?: string | null
+          becomes_ppor_on?: string | null
+          costs_fixed_pa_cents?: number | null
+          created_at?: string
+          depreciation_capital_pa_cents?: number | null
+          depreciation_plant_pa_cents?: number | null
+          id?: string
+          insurance_pa_cents?: number | null
+          land_tax_pa_cents?: number | null
+          maintenance_pct_of_value?: number | null
+          name?: string
+          purchase_date?: string
+          purchase_price_cents?: number
+          rates_pa_cents?: number | null
+          rent_pw_cents?: number | null
+          sold_on?: string | null
+          strata_pa_cents?: number | null
+          updated_at?: string
+          user_id?: string
+          vacancy_weeks_pa?: number | null
+          value_growth_pa?: number | null
+          value_now_cents?: number
+        }
+        Relationships: []
+      }
+      scenarios: {
+        Row: {
+          created_at: string
+          horizon_years: number | null
+          id: string
+          name: string
+          notes: string | null
+          start_date: string
+          stress_borrow_cap_down_pct: number | null
+          stress_growth_haircut_pct: number | null
+          stress_rate_bump_pct: number | null
+          stress_vacancy_weeks: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          horizon_years?: number | null
+          id?: string
+          name: string
+          notes?: string | null
+          start_date: string
+          stress_borrow_cap_down_pct?: number | null
+          stress_growth_haircut_pct?: number | null
+          stress_rate_bump_pct?: number | null
+          stress_vacancy_weeks?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          horizon_years?: number | null
+          id?: string
+          name?: string
+          notes?: string | null
+          start_date?: string
+          stress_borrow_cap_down_pct?: number | null
+          stress_growth_haircut_pct?: number | null
+          stress_rate_bump_pct?: number | null
+          stress_vacancy_weeks?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          created_at: string
+          date_of_birth: string | null
+          id: string
+          inflation_cpi_pa: number | null
+          medicare_levy_pct: number | null
+          name: string
+          retirement_age: number | null
+          return_portfolio_pa: number | null
+          return_super_pa: number | null
+          state_code: string | null
+          tax_marginal_rate: number | null
+          updated_at: string
+          user_id: string
+          wage_growth_pa: number | null
+        }
+        Insert: {
+          created_at?: string
+          date_of_birth?: string | null
+          id?: string
+          inflation_cpi_pa?: number | null
+          medicare_levy_pct?: number | null
+          name: string
+          retirement_age?: number | null
+          return_portfolio_pa?: number | null
+          return_super_pa?: number | null
+          state_code?: string | null
+          tax_marginal_rate?: number | null
+          updated_at?: string
+          user_id: string
+          wage_growth_pa?: number | null
+        }
+        Update: {
+          created_at?: string
+          date_of_birth?: string | null
+          id?: string
+          inflation_cpi_pa?: number | null
+          medicare_levy_pct?: number | null
+          name?: string
+          retirement_age?: number | null
+          return_portfolio_pa?: number | null
+          return_super_pa?: number | null
+          state_code?: string | null
+          tax_marginal_rate?: number | null
+          updated_at?: string
+          user_id?: string
+          wage_growth_pa?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
