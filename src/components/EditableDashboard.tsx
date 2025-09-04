@@ -28,7 +28,7 @@ import EditableProfileForm from './forms/EditableProfileForm';
 import ScenarioManager from './ScenarioManager';
 
 const EditableDashboard: React.FC = () => {
-  const [userId] = useState('demo-user'); // In real app, get from auth
+  const [userId] = useState('550e8400-e29b-41d4-a716-446655440000'); // Demo UUID - in real app, get from auth
   const [currentScenario, setCurrentScenario] = useState<Scenario | null>(null);
   const [forecast, setForecast] = useState<ForecastMonth[]>([]);
   const [summary, setSummary] = useState<any>(null);
