@@ -89,6 +89,7 @@ export interface Scenario {
   id: string;
   userId: string;
   name: string;
+  notes?: string;
   startDate: Date;
   horizonYears: number;
   profile: UserProfile;
