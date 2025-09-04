@@ -17,6 +17,34 @@ export interface UserProfile {
   taxMarginalRate: number;
   medicareLevy: number;
   stateCode: string;
+  // New financial fields
+  salaryCurrentCents: number;
+  salaryGrowthPa: number;
+  savingsCurrentCents: number;
+  superCurrentCents: number;
+  otherInvestmentsCents: number;
+  livingExpensesPaCents: number;
+}
+
+export interface Person {
+  id: string;
+  scenarioId: string;
+  name: string;
+  dateOfBirth?: Date;
+  salaryCurrentCents: number;
+  salaryGrowthPa: number;
+  superCurrentCents: number;
+  isPrimary: boolean;
+}
+
+export interface Asset {
+  id: string;
+  scenarioId: string;
+  name: string;
+  assetType: 'cash' | 'shares' | 'super' | 'other';
+  currentValueCents: number;
+  growthRatePa: number;
+  contributionMonthlyCents: number;
 }
 
 export interface Property {
@@ -95,8 +123,8 @@ export interface Scenario {
   profile: UserProfile;
   properties: Property[];
   loans: LoanDetails[];
-  
-  // Stress test parameters
+  people: Person[];
+  assets: Asset[];
   stressRateBumpPct: number;
   stressGrowthHaircutPct: number;
   stressVacancyWeeks: number;

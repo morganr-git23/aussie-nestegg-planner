@@ -95,6 +95,12 @@ const ScenarioManager: React.FC<ScenarioManagerProps> = ({
         taxMarginalRate: profileData.tax_marginal_rate,
         medicareLevy: profileData.medicare_levy_pct,
         stateCode: profileData.state_code,
+        salaryCurrentCents: profileData.salary_current_cents || 0,
+        salaryGrowthPa: profileData.salary_growth_pa || 3.0,
+        savingsCurrentCents: profileData.savings_current_cents || 0,
+        superCurrentCents: profileData.super_current_cents || 0,
+        otherInvestmentsCents: profileData.other_investments_cents || 0,
+        livingExpensesPaCents: profileData.living_expenses_pa_cents || 0,
       } : undefined;
 
       const properties: Property[] = propertiesData?.map(p => ({
@@ -150,9 +156,17 @@ const ScenarioManager: React.FC<ScenarioManagerProps> = ({
           taxMarginalRate: 0.37,
           medicareLevy: 0.02,
           stateCode: 'NSW',
+          salaryCurrentCents: 12000000, // $120k
+          salaryGrowthPa: 0.03,
+          savingsCurrentCents: 1000000, // $10k
+          superCurrentCents: 50000000, // $500k
+          otherInvestmentsCents: 0,
+          livingExpensesPaCents: 6000000, // $60k/year
         },
         properties,
         loans,
+        people: [], // TODO: Load people from database
+        assets: [], // TODO: Load assets from database
         stressRateBumpPct: s.stress_rate_bump_pct,
         stressGrowthHaircutPct: s.stress_growth_haircut_pct,
         stressVacancyWeeks: s.stress_vacancy_weeks,

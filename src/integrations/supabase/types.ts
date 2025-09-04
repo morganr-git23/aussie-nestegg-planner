@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      assets: {
+        Row: {
+          asset_type: string
+          contribution_monthly_cents: number | null
+          created_at: string | null
+          current_value_cents: number
+          growth_rate_pa: number | null
+          id: string
+          name: string
+          scenario_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          asset_type: string
+          contribution_monthly_cents?: number | null
+          created_at?: string | null
+          current_value_cents?: number
+          growth_rate_pa?: number | null
+          id?: string
+          name: string
+          scenario_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          asset_type?: string
+          contribution_monthly_cents?: number | null
+          created_at?: string | null
+          current_value_cents?: number
+          growth_rate_pa?: number | null
+          id?: string
+          name?: string
+          scenario_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       loans: {
         Row: {
           allow_redraw: boolean | null
@@ -66,6 +102,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      people: {
+        Row: {
+          created_at: string | null
+          date_of_birth: string | null
+          id: string
+          is_primary: boolean | null
+          name: string
+          salary_current_cents: number | null
+          salary_growth_pa: number | null
+          scenario_id: string
+          super_current_cents: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_of_birth?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name: string
+          salary_current_cents?: number | null
+          salary_growth_pa?: number | null
+          scenario_id: string
+          super_current_cents?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_of_birth?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name?: string
+          salary_current_cents?: number | null
+          salary_growth_pa?: number | null
+          scenario_id?: string
+          super_current_cents?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       plan_events: {
         Row: {
@@ -234,12 +309,18 @@ export type Database = {
           date_of_birth: string | null
           id: string
           inflation_cpi_pa: number | null
+          living_expenses_pa_cents: number | null
           medicare_levy_pct: number | null
           name: string
+          other_investments_cents: number | null
           retirement_age: number | null
           return_portfolio_pa: number | null
           return_super_pa: number | null
+          salary_current_cents: number | null
+          salary_growth_pa: number | null
+          savings_current_cents: number | null
           state_code: string | null
+          super_current_cents: number | null
           tax_marginal_rate: number | null
           updated_at: string
           user_id: string
@@ -250,12 +331,18 @@ export type Database = {
           date_of_birth?: string | null
           id?: string
           inflation_cpi_pa?: number | null
+          living_expenses_pa_cents?: number | null
           medicare_levy_pct?: number | null
           name: string
+          other_investments_cents?: number | null
           retirement_age?: number | null
           return_portfolio_pa?: number | null
           return_super_pa?: number | null
+          salary_current_cents?: number | null
+          salary_growth_pa?: number | null
+          savings_current_cents?: number | null
           state_code?: string | null
+          super_current_cents?: number | null
           tax_marginal_rate?: number | null
           updated_at?: string
           user_id: string
@@ -266,12 +353,18 @@ export type Database = {
           date_of_birth?: string | null
           id?: string
           inflation_cpi_pa?: number | null
+          living_expenses_pa_cents?: number | null
           medicare_levy_pct?: number | null
           name?: string
+          other_investments_cents?: number | null
           retirement_age?: number | null
           return_portfolio_pa?: number | null
           return_super_pa?: number | null
+          salary_current_cents?: number | null
+          salary_growth_pa?: number | null
+          savings_current_cents?: number | null
           state_code?: string | null
+          super_current_cents?: number | null
           tax_marginal_rate?: number | null
           updated_at?: string
           user_id?: string

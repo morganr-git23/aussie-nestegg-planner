@@ -25,6 +25,8 @@ import { type LoanDetails } from '@/domain/loanEngine';
 import EditablePropertyForm from './forms/EditablePropertyForm';
 import EditableLoanForm from './forms/EditableLoanForm';
 import EditableProfileForm from './forms/EditableProfileForm';
+import EditablePeopleForm from './forms/EditablePeopleForm';
+import EditableAssetsForm from './forms/EditableAssetsForm';
 import ScenarioManager from './ScenarioManager';
 
 const EditableDashboard: React.FC = () => {
@@ -246,9 +248,11 @@ const EditableDashboard: React.FC = () => {
               </Card>
             ) : (
               <Tabs defaultValue="overview" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-5">
+                <TabsList className="grid w-full grid-cols-7">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="profile">Profile</TabsTrigger>
+                  <TabsTrigger value="people">People</TabsTrigger>
+                  <TabsTrigger value="assets">Assets</TabsTrigger>
                   <TabsTrigger value="properties">Properties</TabsTrigger>
                   <TabsTrigger value="loans">Loans</TabsTrigger>
                   <TabsTrigger value="forecasts">Forecasts</TabsTrigger>
@@ -444,7 +448,23 @@ const EditableDashboard: React.FC = () => {
                   </Card>
                 </TabsContent>
 
-                {/* Properties Tab */}
+                {/* People Tab */}
+                <TabsContent value="people">
+                  <EditablePeopleForm
+                    people={currentScenario.people}
+                    scenarioId={currentScenario.id}
+                    onPeopleChange={(people) => setCurrentScenario({ ...currentScenario, people })}
+                  />
+                </TabsContent>
+
+                {/* Assets Tab */}
+                <TabsContent value="assets">
+                  <EditableAssetsForm
+                    assets={currentScenario.assets}
+                    scenarioId={currentScenario.id}
+                    onAssetsChange={(assets) => setCurrentScenario({ ...currentScenario, assets })}
+                  />
+                </TabsContent>
                 <TabsContent value="properties" className="space-y-6">
                   <Card>
                     <CardHeader>

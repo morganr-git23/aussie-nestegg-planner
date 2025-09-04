@@ -29,6 +29,13 @@ const profileSchema = z.object({
   taxMarginalRate: z.number().min(0).max(1, 'Tax rate must be between 0% and 100%'),
   medicareLevy: z.number().min(0).max(1, 'Medicare levy must be between 0% and 100%'),
   stateCode: z.string().min(1, 'State is required'),
+  // New financial fields
+  salaryCurrentCents: z.number().min(0).optional(),
+  salaryGrowthPa: z.number().min(0).max(1).optional(),
+  savingsCurrentCents: z.number().min(0).optional(),
+  superCurrentCents: z.number().min(0).optional(),
+  otherInvestmentsCents: z.number().min(0).optional(),
+  livingExpensesPaCents: z.number().min(0).optional(),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -68,6 +75,12 @@ const EditableProfileForm: React.FC<EditableProfileFormProps> = ({
       taxMarginalRate: profile.taxMarginalRate,
       medicareLevy: profile.medicareLevy,
       stateCode: profile.stateCode,
+      salaryCurrentCents: profile.salaryCurrentCents / 100,
+      salaryGrowthPa: profile.salaryGrowthPa,
+      savingsCurrentCents: profile.savingsCurrentCents / 100,
+      superCurrentCents: profile.superCurrentCents / 100,
+      otherInvestmentsCents: profile.otherInvestmentsCents / 100,
+      livingExpensesPaCents: profile.livingExpensesPaCents / 100,
     } : {
       name: '',
       dateOfBirth: new Date('1985-01-01'),
@@ -79,6 +92,12 @@ const EditableProfileForm: React.FC<EditableProfileFormProps> = ({
       taxMarginalRate: 0.37,
       medicareLevy: 0.02,
       stateCode: 'NSW',
+      salaryCurrentCents: 1200,
+      salaryGrowthPa: 0.03,
+      savingsCurrentCents: 100,
+      superCurrentCents: 5000,
+      otherInvestmentsCents: 0,
+      livingExpensesPaCents: 600,
     },
   });
 
@@ -99,6 +118,12 @@ const EditableProfileForm: React.FC<EditableProfileFormProps> = ({
         tax_marginal_rate: data.taxMarginalRate,
         medicare_levy_pct: data.medicareLevy,
         state_code: data.stateCode,
+        salary_current_cents: (data.salaryCurrentCents || 0) * 100,
+        salary_growth_pa: data.salaryGrowthPa || 0.03,
+        savings_current_cents: (data.savingsCurrentCents || 0) * 100,
+        super_current_cents: (data.superCurrentCents || 0) * 100,
+        other_investments_cents: (data.otherInvestmentsCents || 0) * 100,
+        living_expenses_pa_cents: (data.livingExpensesPaCents || 0) * 100,
       };
 
       let result;
@@ -135,6 +160,12 @@ const EditableProfileForm: React.FC<EditableProfileFormProps> = ({
         taxMarginalRate: result.data.tax_marginal_rate,
         medicareLevy: result.data.medicare_levy_pct,
         stateCode: result.data.state_code,
+        salaryCurrentCents: result.data.salary_current_cents || 0,
+        salaryGrowthPa: result.data.salary_growth_pa || 0.03,
+        savingsCurrentCents: result.data.savings_current_cents || 0,
+        superCurrentCents: result.data.super_current_cents || 0,
+        otherInvestmentsCents: result.data.other_investments_cents || 0,
+        livingExpensesPaCents: result.data.living_expenses_pa_cents || 0,
       };
 
       toast({
@@ -258,6 +289,91 @@ const EditableProfileForm: React.FC<EditableProfileFormProps> = ({
               {errors.stateCode && (
                 <p className="text-sm text-destructive">{errors.stateCode.message}</p>
               )}
+            </div>
+          </div>
+
+          {/* Current Financial Position */}
+          <div className="space-y-3">
+            <Label className="text-base font-medium">Current Financial Position</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="salary">Current Salary ($)</Label>
+                <Input
+                  id="salary"
+                  type="number"
+                  {...register('salaryCurrentCents', { valueAsNumber: true })}
+                  placeholder="120000"
+                />
+                {errors.salaryCurrentCents && (
+                  <p className="text-sm text-destructive">{errors.salaryCurrentCents.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="salaryGrowth">Salary Growth (%)</Label>
+                <Input
+                  id="salaryGrowth"
+                  type="number"
+                  step="0.01"
+                  {...register('salaryGrowthPa', { valueAsNumber: true })}
+                  placeholder="3"
+                />
+                {errors.salaryGrowthPa && (
+                  <p className="text-sm text-destructive">{errors.salaryGrowthPa.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="savings">Current Savings ($)</Label>
+                <Input
+                  id="savings"
+                  type="number"
+                  {...register('savingsCurrentCents', { valueAsNumber: true })}
+                  placeholder="50000"
+                />
+                {errors.savingsCurrentCents && (
+                  <p className="text-sm text-destructive">{errors.savingsCurrentCents.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="super">Current Super ($)</Label>
+                <Input
+                  id="super"
+                  type="number"
+                  {...register('superCurrentCents', { valueAsNumber: true })}
+                  placeholder="200000"
+                />
+                {errors.superCurrentCents && (
+                  <p className="text-sm text-destructive">{errors.superCurrentCents.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="otherInvestments">Other Investments ($)</Label>
+                <Input
+                  id="otherInvestments"
+                  type="number"
+                  {...register('otherInvestmentsCents', { valueAsNumber: true })}
+                  placeholder="0"
+                />
+                {errors.otherInvestmentsCents && (
+                  <p className="text-sm text-destructive">{errors.otherInvestmentsCents.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="livingExpenses">Living Expenses ($/year)</Label>
+                <Input
+                  id="livingExpenses"
+                  type="number"
+                  {...register('livingExpensesPaCents', { valueAsNumber: true })}
+                  placeholder="60000"
+                />
+                {errors.livingExpensesPaCents && (
+                  <p className="text-sm text-destructive">{errors.livingExpensesPaCents.message}</p>
+                )}
+              </div>
             </div>
           </div>
 

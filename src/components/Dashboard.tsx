@@ -56,6 +56,12 @@ const Dashboard: React.FC = () => {
         taxMarginalRate: 0.37,
         medicareLevy: 0.02,
         stateCode: 'NSW',
+        salaryCurrentCents: 12000000, // $120k
+        salaryGrowthPa: 0.03,
+        savingsCurrentCents: 1000000, // $10k  
+        superCurrentCents: 50000000, // $500k
+        otherInvestmentsCents: 0,
+        livingExpensesPaCents: 6000000, // $60k/year
       };
 
       const demoProperty: Property = {
@@ -99,6 +105,8 @@ const Dashboard: React.FC = () => {
         profile: demoProfile,
         properties: [demoProperty],
         loans: [demoLoan],
+        people: [],
+        assets: [],
         stressRateBumpPct: 0,
         stressGrowthHaircutPct: 0,
         stressVacancyWeeks: 0,
